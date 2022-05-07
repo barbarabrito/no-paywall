@@ -50,12 +50,6 @@ const newspapers = [
 
 ]
 
-const user = {
-
-    nome: 'barbara',
-    idade: 27
-}
-
 
 var jURL = '';
 
