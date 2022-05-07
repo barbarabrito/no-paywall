@@ -1,0 +1,30 @@
+<div class="main-container">
+
+    <h2>slappy 1.0</h2>
+
+    <!-- <img src="img/article.png"> -->
+    <br>
+
+    <form action="/myform" method="POST"> 
+
+        <select value={{cContainer}} id="jornais" name="thiscontainer">
+
+            {{#each newspapers}}
+                <option value={{this.container}} id="thiscont">{{this.name}}</option>
+
+            {{/each}}
+
+        </select>
+
+        <input type="text" name="url" placeholder="URL" required /> 
+
+        <button type="submit" value="Submit" id="btn-submit-url"><i class="fa-solid fa-arrow-right"></i></button> 
+
+    </form> 
+    <br>
+
+    <div class="container-article">
+        <p>{{article}}</p> 
+    </div>
+
+</div>

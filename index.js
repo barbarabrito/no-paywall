@@ -1,0 +1,117 @@
+const PORT = 5000
+const express = require('express')
+const axios = require('axios')
+const cheerio = require('cheerio')
+const cors = require('cors')
+const exphbs  = require('express-handlebars')
+const bodyParser = require('body-parser')
+const { urlencoded } = require('express')
+
+
+const app = express()
+
+var hbs = exphbs.create({ /* config */ });
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+app.engine('handlebars', hbs.engine);
+
+app.use(express.static('public'));
+
+app.set('view engine', 'handlebars');
+
+app.get('/', function (req, res) {
+  res.render('home', {newspapers, article})
+})
+
+
+const newspapers = [
+
+{
+    id: 1,
+    name: 'Estadão',
+    container: '.n--noticia-especial__list'
+},
+{   
+    id: 2,
+    name: 'Folha de SP',
+    container: '.c-news__body'
+},
+{   
+    id: 3,
+    name:'O Globo',
+    container: '.article__content-container'
+},
+{   
+    id: 4,
+    name: 'UOL',
+    container: '.text'
+}
+
+]
+
+const user = {
+
+    nome: 'barbara',
+    idade: 27
+}
+
+
+var jURL = '';
+
+let article = '';
+
+let cContainer = '';
+
+
+app.post('/myForm', urlencodedParser, function(req, res){
+    console.log(req.body)
+    jURL = req.body.url
+
+    cContainer = req.body.thiscontainer
+    if(jURL.includes('oglobo.globo.com/saude/')){
+        cContainer = '.content-text__container'
+
+    }
+
+    console.log(cContainer)
+    console.log(jURL)
+    getData()
+    setTimeout(() => {
+        res.redirect('/')
+    }, 6000);    
+})
+
+
+async function getData() {
+
+  try {
+
+    const { data } = await axios.get(jURL);
+
+    const $ = cheerio.load(data, {
+      xml: {
+        xmlMode: false,
+        normalizeWhitespace: true,
+
+        },
+    });
+
+    $('title').remove();
+    $('figure').remove();
+    $('button').remove();
+    $('footer').remove();
+    $('.js-gallery-widget').remove();
+    $('.block__advertising-header').remove();
+
+    article = $(cContainer).text();
+    console.log(article)
+
+    } catch (err) {
+
+        console.error(err);
+    }
+}
+
+
+app.listen(PORT, () => console.log(`server is running on port ${PORT}`))
