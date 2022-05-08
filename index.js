@@ -27,29 +27,27 @@ app.get('/', function (req, res) {
 
 const newspapers = [
 
-{
-    id: 1,
-    name: 'Estadão',
-    container: '.n--noticia-especial__list'
-},
-{   
-    id: 2,
-    name: 'Folha de SP',
-    container: '.c-news__body'
-},
-{   
-    id: 3,
-    name:'O Globo',
-    container: '.article__content-container'
-},
-{   
-    id: 4,
-    name: 'UOL',
-    container: '.text'
-}
-
+    {
+        id: 1,
+        name: 'Estadão',
+        container: '.n--noticia-especial__list'
+    },
+    {   
+        id: 2,
+        name: 'Folha de SP',
+        container: '.c-news__body'
+    },
+    {   
+        id: 3,
+        name:'O Globo',
+        container: '.article__content-container'
+    },
+    {   
+        id: 4,
+        name: 'UOL',
+        container: '.text'
+    }
 ]
-
 
 var jURL = '';
 
@@ -63,17 +61,25 @@ app.post('/myForm', urlencodedParser, function(req, res){
     jURL = req.body.url
 
     cContainer = req.body.thiscontainer
-    if(jURL.includes('oglobo.globo.com/saude/')){
+    if(jURL.includes('globo.com/saude/')){
         cContainer = '.content-text__container'
-
     }
 
     console.log(cContainer)
     console.log(jURL)
-    getData()
-    setTimeout(() => {
-        res.redirect('/')
-    }, 6000);    
+
+    result()
+
+    async function result(){
+
+        try{
+            await getData()
+            res.redirect('/')
+
+        }catch(err){
+            console.log(err)
+        }
+    }  
 })
 
 
@@ -87,7 +93,6 @@ async function getData() {
       xml: {
         xmlMode: false,
         normalizeWhitespace: true,
-
         },
     });
 
@@ -101,11 +106,10 @@ async function getData() {
     article = $(cContainer).text();
     console.log(article)
 
-    } catch (err) {
+    }catch (err) {
 
         console.error(err);
     }
 }
-
 
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`))
