@@ -27,20 +27,20 @@ app.get('/', function (req, res) {
 
 const newspapers = [
 
-    {
-        id: 1,
-        name: 'Estadão',
-        container: '.n--noticia-especial__list'
-    },
     {   
-        id: 2,
+        id: 1,
         name: 'Folha de SP',
         container: '.c-news__body'
     },
     {   
-        id: 3,
+        id: 2,
         name:'O Globo',
         container: '.article__content-container'
+    },
+        {
+        id: 3,
+        name: 'Estadão',
+        container: '.n--noticia__content'
     },
     {   
         id: 4,
@@ -56,16 +56,21 @@ let article = '';
 let cContainer = '';
 
 
-app.post('/myForm', urlencodedParser, function(req, res){
+app.post('/formURL', urlencodedParser, function(req, res){
     console.log(req.body)
     jURL = req.body.url
 
     cContainer = req.body.thiscontainer
+
     if(jURL.includes('globo.com/saude/')){
         cContainer = '.content-text__container'
     }
 
-    console.log(cContainer)
+    if(jURL.includes('blogs.oglobo.globo.com')){
+        cContainer = '.post__content--article-post'
+    }
+
+    // console.log(cContainer)
     console.log(jURL)
 
     result()
@@ -102,9 +107,10 @@ async function getData() {
     $('footer').remove();
     $('.js-gallery-widget').remove();
     $('.block__advertising-header').remove();
+    $('.line-leia').remove();
 
     article = $(cContainer).text();
-    console.log(article)
+    // console.log(article)
 
     }catch (err) {
 

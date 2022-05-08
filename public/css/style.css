@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@200;300;400;600&family=Open+Sans:wght@300;400;600&display=swap');
 
 body{
 
@@ -10,20 +9,29 @@ body{
 
 .main-container{
 
-	max-width: 1000px;
+/*	max-width: 1000px;*/
 	margin: 2em auto;
 	text-align: center;
 }
 
+.main-container hr{
+
+	width:100px;
+	height: 1px;
+    background-color: black;
+    border: none;
+	
+}
+
 #bow-tie{
 
-	width: 85px;
-	height: 45px;
+	width: 35px;
+	height: 22px;
 }
 
 figure{
-
-	color: gray;
+	margin-top: 3em;
+	color: #000;
 }
 
 #btn-submit-url{
@@ -41,12 +49,15 @@ figure{
 	font-size: 15px;
 }
 
-.container-article{
+.article-container{
 
-	max-width: 800px;
+	max-width: 750px;
 	text-align: justify;
 	padding: 2em;
 	margin: 2em auto;
+	font-family: 'IBM Plex Serif', serif;
+	font-size: 18px;
+	font-weight: 300;
 }
 
 form{
@@ -54,7 +65,7 @@ form{
 	display: inline-flex;
 	align-items: center;
 	align-content: center;
-	margin-top: 5em;
+	margin-top: 3em;
 }
 
 form select{
@@ -71,18 +82,17 @@ form input{
 
 	color: #fff;
 	background-color: #252525;
-	/*margin: 0 0.5em;*/
 	padding: 0.3em;
 	border-color: #cc8500;
 	border-style: solid;
-	width: 500px;
+	width: 550px;
 }
 
 footer{
 
 	text-align: center;
 	color: #cc8500;
-	margin-top: 1em;
+	margin-top: 3em;
 }
 
 footer a {
@@ -99,6 +109,6 @@ footer a {
 @media (max-width: 800px){
 
 	form input{
-		max-width: 120px;
+		max-width: 130px;
 	}
 }
