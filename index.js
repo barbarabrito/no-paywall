@@ -37,7 +37,7 @@ const newspapers = [
         name:'O Globo',
         container: '.article__content-container'
     },
-        {
+    {
         id: 3,
         name: 'Estadão',
         container: '.n--noticia__content'
