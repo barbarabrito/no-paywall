@@ -63,14 +63,17 @@ app.post('/formURL', urlencodedParser, function(req, res){
     cContainer = req.body.thiscontainer
 
     if(jURL.includes('globo.com/saude/')){
-        cContainer = '.content-text__container'
+        cContainer = '.content-text__container';
     }
 
     if(jURL.includes('blogs.oglobo.globo.com')){
-        cContainer = '.post__content--article-post'
+        cContainer = '.post__content--article-post';
     }
 
-    // console.log(cContainer)
+    if(jURL.includes('estadao.com.br/internacional/') || jURL.includes('estadao.com.br/politica/')){
+        cContainer = '.Paragraph__Container-j06jtc-0';
+    }
+    
     console.log(jURL)
 
     result()
@@ -98,19 +101,19 @@ async function getData() {
       xml: {
         xmlMode: false,
         normalizeWhitespace: true,
-        },
-    });
+            },
+        });
 
-    $('title').remove();
-    $('figure').remove();
-    $('button').remove();
-    $('footer').remove();
-    $('.js-gallery-widget').remove();
-    $('.block__advertising-header').remove();
-    $('.line-leia').remove();
+        $('title').remove();
+        $('figure').remove();
+        $('button').remove();
+        $('footer').remove();
+        $('.js-gallery-widget').remove();
+        $('.block__advertising-header').remove();
+        $('.line-leia').remove();
 
-    article = $(cContainer).text();
-    // console.log(article)
+        article = $(cContainer).text();
+        console.log(article)
 
     }catch (err) {
 
