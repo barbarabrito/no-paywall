@@ -112,7 +112,13 @@ async function getData() {
         $('.block__advertising-header').remove();
         $('.line-leia').remove();
 
+        
         article = $(cContainer).text();
+        
+        setTimeout(() => {
+            article = '';
+        }, 9000)
+
         console.log(article)
 
     }catch (err) {
