@@ -35,7 +35,7 @@ const newspapers = [
     {   
         id: 2,
         name:'O Globo',
-        container: '.article__content-container'
+        container: '.content-text__container '
     },
     {
         id: 3,
@@ -61,10 +61,6 @@ app.post('/formURL', urlencodedParser, function(req, res){
     jURL = req.body.url
 
     cContainer = req.body.thiscontainer
-
-    if(jURL.includes('globo.com/saude/')){
-        cContainer = '.content-text__container';
-    }
 
     if(jURL.includes('blogs.oglobo.globo.com')){
         cContainer = '.post__content--article-post';
@@ -95,14 +91,17 @@ async function getData() {
 
   try {
 
-    const { data } = await axios.get(jURL);
+    const response = await axios.get(jURL);
 
-    const $ = cheerio.load(data, {
+    // const $ = cheerio.load(response.data);
+    const $ = cheerio.load(response.data, {
       xml: {
         xmlMode: false,
         normalizeWhitespace: true,
             },
         });
+
+        // console.log($.html());
 
         $('title').remove();
         $('figure').remove();
@@ -117,9 +116,7 @@ async function getData() {
         
         setTimeout(() => {
             article = '';
-        }, 9000)
-
-        console.log(article)
+        }, 1000)
 
     }catch (err) {
 
