@@ -1,14 +1,14 @@
 const PORT = 5000
-const express = require('express')
-const axios = require('axios')
-const cheerio = require('cheerio')
-const cors = require('cors')
-const exphbs  = require('express-handlebars')
-const bodyParser = require('body-parser')
-const { urlencoded } = require('express')
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const cors = require('cors');
+const exphbs  = require('express-handlebars');
+const bodyParser = require('body-parser');
+const { urlencoded } = require('express');
 
 
-const app = express()
+const app = express();
 
 var hbs = exphbs.create({ /* config */ });
 
@@ -21,7 +21,7 @@ app.use(express.static('public'));
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
-  res.render('home', {newspapers, article})
+  res.render('home', {newspapers})
 })
 
 
@@ -49,12 +49,13 @@ const newspapers = [
     }
 ]
 
-var jURL = '';
+let jURL = '';
 
 let article = '';
 
 let cContainer = '';
 
+let removeHTTPS = 'article';
 
 app.post('/formURL', urlencodedParser, function(req, res){
     console.log(req.body)
@@ -78,10 +79,20 @@ app.post('/formURL', urlencodedParser, function(req, res){
 
         try{
             await getData()
-            res.redirect('/')
+            
+            if (jURL.includes('https://')){
+                removeHTTPS = jURL.replace('https://', '');
+                console.log(removeHTTPS);
+            }
+
+            app.get(`/${removeHTTPS}`, function (req, res) {
+              res.render('article', {article})
+            })
+
+            res.redirect(`/${removeHTTPS}`);
 
         }catch(err){
-            console.log(err)
+            console.log(err);
         }
     }  
 })
@@ -111,12 +122,7 @@ async function getData() {
         $('.block__advertising-header').remove();
         $('.line-leia').remove();
 
-        
         article = $(cContainer).text();
-        
-        setTimeout(() => {
-            article = '';
-        }, 1000)
 
     }catch (err) {
 
