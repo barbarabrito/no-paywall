@@ -55,7 +55,7 @@ let article = '';
 
 let cContainer = '';
 
-let removeHTTPS = 'article';
+let removeHTTPS = jURL;
 
 app.post('/formURL', urlencodedParser, function(req, res){
     console.log(req.body)
@@ -71,7 +71,7 @@ app.post('/formURL', urlencodedParser, function(req, res){
         cContainer = '.Paragraph__Container-j06jtc-0';
     }
     
-    console.log(jURL)
+    // console.log(jURL)
 
     result()
 
@@ -82,7 +82,8 @@ app.post('/formURL', urlencodedParser, function(req, res){
             
             if (jURL.includes('https://')){
                 removeHTTPS = jURL.replace('https://', '');
-                console.log(removeHTTPS);
+            }else if (jURL.includes('http://')){
+                removeHTTPS = jURL.replace('http://', '');
             }
 
             app.get(`/${removeHTTPS}`, function (req, res) {

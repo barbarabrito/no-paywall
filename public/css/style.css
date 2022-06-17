@@ -26,7 +26,13 @@ header hr{
 	max-width: 1000px;
 	margin: 2em auto;
 	text-align: center;
-	min-height: 700px;
+	min-height: 600px;
+}
+
+.main-container a{
+	color: #D67D3E;
+	text-decoration: none;
+	font-size: 14px;
 }
 
 #bow-tie{
@@ -40,15 +46,6 @@ figure{
 	color: #000;
 }
 
-#btn-submit-url{
-
-	color: #252525;
-	background-color: #cc8500;
-	cursor: pointer;
-	padding: 0.3em;
-	border-color: #cc8500;
-	border-style: solid;
-}
 
 .fa-arrow-right{
 
@@ -66,12 +63,16 @@ figure{
 	font-weight: 300;
 }
 
+.fa-chevron-left{
+	font-size: 12px;
+}
+
 form{
 
 	display: inline-flex;
 	align-items: center;
 	align-content: center;
-	margin-top: 4em;
+	margin-top: 16em;
 }
 
 form select{
@@ -95,6 +96,16 @@ form input{
 	outline: none;
 }
 
+#btn-submit-url{
+
+	color: #252525;
+	background-color: #cc8500;
+	cursor: pointer;
+	padding: 0.3em;
+	border-color: #cc8500;
+	border-style: solid;
+}
+
 footer{
 
 	text-align: center;
@@ -105,7 +116,7 @@ footer{
 footer a {
 
 	text-decoration: none;
-	color: #ffa366;
+	color: #D67D3E;
 }
 
 .fa-github-alt{
@@ -116,15 +127,30 @@ footer a {
 
 @media (max-width: 800px){
 
+
 	form input{
+		margin-left: -0.4em;
 		max-width: 220px;
 	}
 }
 
-@media (max-width: 500px){
+@media (max-width: 450px){
+
+	form{
+
+		display: inline-block;
+	}
+
+	#btn-submit-url{
+
+		display: block;
+		margin: 1em auto;
+		width: 300px;
+	}
 
 	form input{
-		max-width: 130px;
+		margin-left: -0.4em;
+		max-width: 180px;
 	}
 }
 
