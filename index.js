@@ -122,6 +122,7 @@ async function getData() {
         $('.js-gallery-widget').remove();
         $('.block__advertising-header').remove();
         $('.line-leia').remove();
+        $('style').remove();
 
         article = $(cContainer).text();
 
