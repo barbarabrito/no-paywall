@@ -1,15 +1,20 @@
 <div class="main-container">
-    <form action="/formURL" method="POST"> 
+    <div class="banner">
+        <h1>Remova o paywall</h1>
+    </div>
+    <div class="form-container">
+        <form action="/formURL" method="POST"> 
 
-        <select value={{cContainer}} id="jornais" name="thiscontainer">
+            <select value={{cContainer}} id="jornais" name="thiscontainer">
 
-            {{#each newspapers}}
-            <option value={{this.container}} id="thiscont">{{this.name}}</option>
-            {{/each}}
-        </select>
+                {{#each newspapers}}
+                <option value={{this.container}} id="thiscont">{{this.name}}</option>
+                {{/each}}
+            </select>
 
-        <input type="text" name="url" placeholder="URL" required id="in" /> 
+            <input type="text" name="url" placeholder="URL" id="in" required /> 
 
-        <button type="submit" value="Submit" id="btn-submit-url">Remover<!-- <i class="fa-solid fa-arrow-right"></i> --></button> 
-    </form> 
+            <button type="submit" value="Submit" id="btn-submit-url">Remover</button> 
+        </form> 
+    </div>
 </div>

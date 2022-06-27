@@ -51,11 +51,13 @@ const newspapers = [
 
 let jURL = '';
 
-let article = '';
+let article = [];
 
 let cContainer = '';
 
 let removeHTTPS = jURL;
+
+let text = '';
 
 app.post('/formURL', urlencodedParser, function(req, res){
     console.log(req.body)
@@ -68,7 +70,7 @@ app.post('/formURL', urlencodedParser, function(req, res){
     }
 
     if(jURL.includes('estadao.com.br/internacional/') || jURL.includes('estadao.com.br/politica/')){
-        cContainer = '.Paragraph__Container-j06jtc-0';
+        cContainer = '.styles__Container-sc-1ehbu6v-0';
     }
     
     // console.log(jURL)
@@ -87,7 +89,7 @@ app.post('/formURL', urlencodedParser, function(req, res){
             }
 
             app.get(`/${removeHTTPS}`, function (req, res) {
-              res.render('article', {article})
+              res.render('article', {text, article})
             })
 
             res.redirect(`/${removeHTTPS}`);
@@ -105,15 +107,7 @@ async function getData() {
 
     const response = await axios.get(jURL);
 
-    // const $ = cheerio.load(response.data);
-    const $ = cheerio.load(response.data, {
-      xml: {
-        xmlMode: false,
-        normalizeWhitespace: true,
-            },
-        });
-
-        // console.log($.html());
+    const $ = cheerio.load(response.data, {xmlMode: false});
 
         $('title').remove();
         $('figure').remove();
@@ -124,8 +118,25 @@ async function getData() {
         $('.line-leia').remove();
         $('style').remove();
 
-        article = $(cContainer).text();
+        if(cContainer === '.content-text__container'){
+            
+            article = [];
+            text = $(cContainer).text();
+            article.push({
+                  text
+                });
+            console.log(text);
+        }else{
 
+            article = [];
+            $(cContainer+' p').each(function(){
+                text = $(this).text();
+                article.push({
+                  text
+                });
+            });
+            console.log(text);
+        }
     }catch (err) {
 
         console.error(err);
