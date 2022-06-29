@@ -12,7 +12,6 @@ body{
 header{
 
 	text-align: center;
-	/*border: 1px solid #fff;*/
 }
 
 header hr{
@@ -146,6 +145,7 @@ footer a {
 @media (max-width: 800px){
 
 	.banner{
+		margin: 14em auto 3em;
 		text-align: center;
 	}
 
@@ -174,7 +174,7 @@ footer a {
 	}
 
 	.main-container{
-		min-height: 400px;
+		min-height: 350px;
 	}
 }
 

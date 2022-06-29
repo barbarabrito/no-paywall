@@ -57,7 +57,7 @@ let cContainer = '';
 
 let removeHTTPS = jURL;
 
-let text = '';
+let text = undefined;
 
 app.post('/formURL', urlencodedParser, function(req, res){
     console.log(req.body)
@@ -87,11 +87,9 @@ app.post('/formURL', urlencodedParser, function(req, res){
             }else if (jURL.includes('http://')){
                 removeHTTPS = jURL.replace('http://', '');
             }
-
             app.get(`/${removeHTTPS}`, function (req, res) {
               res.render('article', {text, article})
             })
-
             res.redirect(`/${removeHTTPS}`);
 
         }catch(err){
@@ -117,9 +115,10 @@ async function getData() {
         $('.block__advertising-header').remove();
         $('.line-leia').remove();
         $('style').remove();
+        $('.ads-placeholder-label').remove();
+        $('.styles__Container-x3s0n4-0').remove();
 
-        if(cContainer === '.content-text__container'){
-            
+        if(cContainer === '.content-text__container'){        
             article = [];
             text = $(cContainer).text();
             article.push({
@@ -127,7 +126,6 @@ async function getData() {
                 });
             console.log(text);
         }else{
-
             article = [];
             $(cContainer+' p').each(function(){
                 text = $(this).text();

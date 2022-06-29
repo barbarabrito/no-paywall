@@ -4,8 +4,6 @@
 
 Paywall bypasser built with node.js, cheerio and express-handlebars
 
-a web version of [github.com/barbarabrito/slappy](https://github.com/barbarabrito/slappy)
-
 Still a work in progress
 
 You can access at [slappy.onrender.com](https://slappy.onrender.com)
