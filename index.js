@@ -65,14 +65,17 @@ app.post('/formURL', urlencodedParser, function(req, res){
 
     cContainer = req.body.thiscontainer
 
+
     if(jURL.includes('blogs.oglobo.globo.com')){
         cContainer = '.post__content--article-post';
     }
 
     if(jURL.includes('estadao.com.br/internacional/') || jURL.includes('estadao.com.br/politica/')){
-        cContainer = '.styles__Container-sc-1ehbu6v-0';
+        cContainer = '.news-body';
+        console.log(cContainer);
     }
     
+    console.log(cContainer);
     // console.log(jURL)
 
     result()
@@ -117,6 +120,7 @@ async function getData() {
         $('style').remove();
         $('.ads-placeholder-label').remove();
         $('.styles__Container-x3s0n4-0').remove();
+        $('.related-item-single').remove();
 
         if(cContainer === '.content-text__container'){        
             article = [];
