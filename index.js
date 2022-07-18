@@ -7,7 +7,6 @@ const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
 const { urlencoded } = require('express');
 
-
 const app = express();
 
 var hbs = exphbs.create({ /* config */ });
@@ -23,7 +22,6 @@ app.set('view engine', 'handlebars');
 app.get('/', function (req, res) {
   res.render('home', {newspapers})
 })
-
 
 const newspapers = [
 
@@ -76,7 +74,6 @@ app.post('/formURL', urlencodedParser, function(req, res){
     }
     
     console.log(cContainer);
-    // console.log(jURL)
 
     result()
 
@@ -107,7 +104,6 @@ async function getData() {
   try {
 
     const response = await axios.get(jURL);
-
     const $ = cheerio.load(response.data, {xmlMode: false});
 
         $('title').remove();
