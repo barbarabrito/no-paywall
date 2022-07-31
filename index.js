@@ -24,47 +24,51 @@ app.get('/', function (req, res) {
   res.render('home')
 })
 
+let article;
+
 app.post('/formURL', urlencodedParser, function(req, res){
     
     let jURL = '';
-    let removeHTTPS = jURL;
+    let redirectToArticle = jURL;
 
     console.log(req.body)
     jURL = req.body.url
 
-    result()
+    try{
 
-    async function result(){
-
-        try{
-            
-            if (jURL.includes('https://')){
-                removeHTTPS = jURL.replace('https://', '');
-            }else if (jURL.includes('http://')){
-                removeHTTPS = jURL.replace('http://', '');
-            }
-            app.get(`/${removeHTTPS}`, function (req, res) {
-              res.render('article')
-            })
-            res.redirect(`/${removeHTTPS}`);
-            browse(jURL);
-        }catch(err){
-            console.log(err);
+        if (jURL.includes('https://')){
+            redirectToArticle = jURL.replace('https://', '');
+        }else if (jURL.includes('http://')){
+            redirectToArticle = jURL.replace('http://', '');
         }
-    }  
-})
+        
+        app.get(`/${redirectToArticle}`, async function (req, res) {
+            await scrape(jURL);
+            res.render('article', {article})
+        })
+        res.redirect(`/${redirectToArticle}`);
 
+    }catch(err){
+        console.log(err);
+    }
+})
 
 async function browse(jURL){
 
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({headless: true});
     const page = await browser.newPage();
     await page.goto(jURL);
     page.setJavaScriptEnabled(false)
-    await page.evaluate(() => {
-        location.reload(true)
-    })
-    return page;
+    await page.reload();
+    const pageContent = page.content();
+    return pageContent;
+    await browser.close();
+}
+
+async function scrape(jURL){ 
+    const html = await browse(jURL);
+    const $ = cheerio.load(html);
+    article = html;
 }
 
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`))

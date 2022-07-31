@@ -29,7 +29,7 @@ header hr{
 	min-height: 500px;
 }
 
-.main-container, .redirect a{
+.main-container a, .redirect a{
 	color: #ff8095;;
 	text-decoration: none;
 }
