@@ -4,14 +4,6 @@
     </div>
     <div class="form-container">
         <form action="/formURL" method="POST"> 
-
-            <select value={{cContainer}} id="jornais" name="thiscontainer">
-
-                {{#each newspapers}}
-                <option value={{this.container}} id="thiscont">{{this.name}}</option>
-                {{/each}}
-            </select>
-
             <input type="text" name="url" placeholder="URL" id="in" required /> 
 
             <button type="submit" value="Submit" id="btn-submit-url">Remover</button> 

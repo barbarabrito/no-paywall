@@ -29,14 +29,14 @@ header hr{
 	min-height: 500px;
 }
 
-.main-container a{
+.main-container, .redirect a{
 	color: #ff8095;;
 	text-decoration: none;
 }
 
 .banner{
 	margin: 18em auto 3em;
-	max-width: 720px;
+	max-width: fit-content;
 	text-align: initial;
 	color: #000;
    	font-family: 'Open Sans', sans-serif;
@@ -44,7 +44,7 @@ header hr{
 }
 
 .banner h1{
-	font-size:50px;
+	font-size:65px;
 }
 
 #bow-tie{
@@ -95,15 +95,6 @@ form{
 	align-content: center;
 }
 
-form select{
-
-	font-weight: bold;
-	color: #fff;
-	background-color: #ff3355;
-	padding: 1em;
-	border-color: #ff3355;
-	border-style: solid;
-}
 
 form input{
 	background-color: #fff;
@@ -157,10 +148,6 @@ footer a {
 		display: inline-block;
 	}
 
-	form select{
-		width: 120px;
-	}
-
 	#btn-submit-url{
 
 		display: block;
@@ -170,7 +157,7 @@ footer a {
 
 	form input{
 		margin-left: -0.4em;
-		max-width: 200px;
+		max-width: 300px;
 	}
 
 	.main-container{

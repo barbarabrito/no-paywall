@@ -6,6 +6,7 @@ const cors = require('cors');
 const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
 const { urlencoded } = require('express');
+const puppeteer = require('puppeteer');
 
 const app = express();
 
@@ -20,67 +21,22 @@ app.use(express.static('public'));
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
-  res.render('home', {newspapers})
+  res.render('home')
 })
 
-const newspapers = [
-
-    {   
-        id: 1,
-        name: 'Folha de SP',
-        container: '.c-news__body'
-    },
-    {   
-        id: 2,
-        name:'O Globo',
-        container: '.content-text__container '
-    },
-    {
-        id: 3,
-        name: 'Estadão',
-        container: '.n--noticia__content'
-    },
-    {   
-        id: 4,
-        name: 'UOL',
-        container: '.text'
-    }
-]
-
-let jURL = '';
-
-let article = [];
-
-let cContainer = '';
-
-let removeHTTPS = jURL;
-
-let text = undefined;
-
 app.post('/formURL', urlencodedParser, function(req, res){
+    
+    let jURL = '';
+    let removeHTTPS = jURL;
+
     console.log(req.body)
     jURL = req.body.url
-
-    cContainer = req.body.thiscontainer
-
-
-    if(jURL.includes('blogs.oglobo.globo.com')){
-        cContainer = '.post__content--article-post';
-    }
-
-    if(jURL.includes('estadao.com.br/internacional/') || jURL.includes('estadao.com.br/politica/')){
-        cContainer = '.news-body';
-        console.log(cContainer);
-    }
-    
-    console.log(cContainer);
 
     result()
 
     async function result(){
 
         try{
-            await getData()
             
             if (jURL.includes('https://')){
                 removeHTTPS = jURL.replace('https://', '');
@@ -88,10 +44,10 @@ app.post('/formURL', urlencodedParser, function(req, res){
                 removeHTTPS = jURL.replace('http://', '');
             }
             app.get(`/${removeHTTPS}`, function (req, res) {
-              res.render('article', {text, article})
+              res.render('article')
             })
             res.redirect(`/${removeHTTPS}`);
-
+            browse(jURL);
         }catch(err){
             console.log(err);
         }
@@ -99,46 +55,16 @@ app.post('/formURL', urlencodedParser, function(req, res){
 })
 
 
-async function getData() {
+async function browse(jURL){
 
-  try {
-
-    const response = await axios.get(jURL);
-    const $ = cheerio.load(response.data, {xmlMode: false});
-
-        $('title').remove();
-        $('figure').remove();
-        $('button').remove();
-        $('footer').remove();
-        $('.js-gallery-widget').remove();
-        $('.block__advertising-header').remove();
-        $('.line-leia').remove();
-        $('style').remove();
-        $('.ads-placeholder-label').remove();
-        $('.styles__Container-x3s0n4-0').remove();
-        $('.related-item-single').remove();
-
-        if(cContainer === '.content-text__container'){        
-            article = [];
-            text = $(cContainer).text();
-            article.push({
-                  text
-                });
-            console.log(text);
-        }else{
-            article = [];
-            $(cContainer+' p').each(function(){
-                text = $(this).text();
-                article.push({
-                  text
-                });
-            });
-            console.log(text);
-        }
-    }catch (err) {
-
-        console.error(err);
-    }
+    const browser = await puppeteer.launch({headless: false});
+    const page = await browser.newPage();
+    await page.goto(jURL);
+    page.setJavaScriptEnabled(false)
+    await page.evaluate(() => {
+        location.reload(true)
+    })
+    return page;
 }
 
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`))
